@@ -5,8 +5,8 @@
    ============================================================ */
 const CONFIG = {
   // Cole a URL e a chave "anon public" do seu projeto em Supabase → Project Settings → API
-  SUPABASE_URL: "https://SEU-PROJETO.supabase.co",
-  SUPABASE_ANON_KEY: "SUA-CHAVE-ANON-AQUI",
+  SUPABASE_URL: "https://arffptuclrrzuzdrcmuc.supabase.co",
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFyZmZwdHVjbHJyenV6ZHJjbXVjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU3MTcxMDAsImV4cCI6MjEwMTI5MzEwMH0.n3AqYrMwv2ayVa4la6vesVJOfd_LkdmY-ikp8P8uFAg",
 
   // Número de WhatsApp no formato DDI+DDD+numero, sem espaços, +, ou símbolos
   WHATSAPP_NUMBER: "5541999249827",
