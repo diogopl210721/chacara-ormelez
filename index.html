@@ -43,7 +43,7 @@
     <a class="estrada-underline" href="calendario.html">Disponibilidade</a>
     <a class="estrada-underline" href="#contato">Contato</a>
   </nav>
-  <a class="btn btn-whats" data-magnetico data-whats-generico href="#" target="_blank" rel="noopener">💬 WhatsApp</a>
+  <a class="btn btn-whats" data-magnetico data-whats-generico data-abrir-wa href="#" target="_blank" rel="noopener">💬 WhatsApp</a>
 </header>
 
 <!-- ============================================================
@@ -61,11 +61,11 @@
     </h1>
     <p class="lead">Um refúgio cercado de mata, água e silêncio — feito para igrejas viverem encontros e reencontros com Deus há mais de uma década.</p>
     <div class="hero-ctas">
-      <a class="btn btn-whats" data-magnetico data-whats-generico href="#" target="_blank" rel="noopener">💬 Falar no WhatsApp</a>
+      <a class="btn btn-whats" data-magnetico data-whats-generico data-abrir-wa href="#" target="_blank" rel="noopener">💬 Falar no WhatsApp</a>
       <a class="btn btn-outline" data-magnetico href="calendario.html">📅 Ver datas disponíveis</a>
     </div>
     <div class="hero-meta">
-      <div><strong><span data-contador="206">0</span></strong><span>pessoas hospedadas</span></div>
+      <div><strong><span data-contador="15">0</span>mil+</strong><span>pessoas já hospedadas</span></div>
       <div><strong><span data-contador="90">0</span>mil L</strong><span>piscina</span></div>
       <div><strong><span data-contador="150">0</span>m</strong><span>tirolesa</span></div>
       <div><strong><span data-contador="13">0</span>+</strong><span>anos de história</span></div>
@@ -126,19 +126,20 @@
     <p class="sub reveal">Da capela ao pé da tirolesa — espaços pensados para descanso, comunhão e lazer em família na fé.</p>
 
     <div class="amenities reveal-stagger">
-      <div class="amenity"><span class="ico">🏊</span><div><strong>Piscina de 90 mil litros</strong><span>Adulto e infantil</span></div></div>
-      <div class="amenity"><span class="ico">💦</span><div><strong>Eskibunda de 45 m</strong><span>Toboágua natural</span></div></div>
-      <div class="amenity"><span class="ico">🌲</span><div><strong>Tirolesa de 150 m</strong><span>Sobre a mata</span></div></div>
+      <div class="amenity" data-categoria="piscina"><span class="ico">🏊</span><div><strong>Piscina de 90 mil litros</strong><span>Adulto e infantil</span></div></div>
+      <div class="amenity" data-categoria="skibunda"><span class="ico">💦</span><div><strong>Eskibunda de 45 m</strong><span>Toboágua natural</span></div></div>
+      <div class="amenity" data-categoria="tirolesa"><span class="ico">🌲</span><div><strong>Tirolesa de 150 m</strong><span>Sobre a mata</span></div></div>
       <div class="amenity"><span class="ico">⚽</span><div><strong>Campo de futebol</strong><span>Gramado completo</span></div></div>
       <div class="amenity"><span class="ico">🐎</span><div><strong>Passeio a cavalo</strong><span>Trilhas na chácara</span></div></div>
-      <div class="amenity"><span class="ico">⛺</span><div><strong>Espaços de lazer</strong><span>Descanso ao ar livre</span></div></div>
-      <div class="amenity"><span class="ico">🛏️</span><div><strong>Alojamento</strong><span>Para 206 pessoas</span></div></div>
-      <div class="amenity"><span class="ico">🍽️</span><div><strong>Refeitório</strong><span>Estrutura completa</span></div></div>
-      <div class="amenity"><span class="ico">🔥</span><div><strong>Churrasqueira &amp; lual</strong><span>Fogueira sob as estrelas</span></div></div>
-      <div class="amenity"><span class="ico">⛪</span><div><strong>Capela para cultos</strong><span>Ambiente reservado</span></div></div>
+      <div class="amenity" data-categoria="lual"><span class="ico">⛺</span><div><strong>Espaços de lazer</strong><span>Descanso ao ar livre</span></div></div>
+      <div class="amenity" data-categoria="dormitorios"><span class="ico">🛏️</span><div><strong>Alojamento</strong><span>Para 206 pessoas</span></div></div>
+      <div class="amenity" data-categoria="refeitorio"><span class="ico">🍽️</span><div><strong>Refeitório</strong><span>Estrutura completa</span></div></div>
+      <div class="amenity" data-categoria="lual"><span class="ico">🔥</span><div><strong>Churrasqueira &amp; lual</strong><span>Fogueira sob as estrelas</span></div></div>
+      <div class="amenity" data-categoria="capela"><span class="ico">⛪</span><div><strong>Capela para cultos</strong><span>Ambiente reservado</span></div></div>
       <div class="amenity"><span class="ico">🙏</span><div><strong>Monte de oração</strong><span>Espaço de contemplação</span></div></div>
       <div class="amenity"><span class="ico">✨</span><div><strong>Encontro com Deus</strong><span>O propósito de tudo</span></div></div>
     </div>
+    <p class="amenity-hint reveal">💡 Toque num item com foto pra ver imagens dele na galeria</p>
   </div>
 </section>
 
@@ -157,6 +158,7 @@
         <a class="social-chip" href="https://www.facebook.com/chacaraormelezoficial/" target="_blank" rel="noopener">👍 Facebook</a>
       </div>
     </div>
+    <div class="filtro-chips reveal" id="filtro-chips"></div>
     <div class="grid-galeria" id="grid-galeria"></div>
   </div>
 </section>
@@ -206,7 +208,7 @@
       <div class="eyebrow">Contato</div>
       <h2>Vamos planejar o seu retiro</h2>
       <div class="contact-list">
-        <a class="contact-item" data-whats-generico href="#" target="_blank" rel="noopener">
+        <a class="contact-item" data-whats-generico data-abrir-wa href="#" target="_blank" rel="noopener">
           <span class="ico">💬</span>
           <span><small>WhatsApp</small>(41) 99924-9827</span>
         </a>
@@ -218,10 +220,19 @@
           <span class="ico">👍</span>
           <span><small>Facebook</small>chacaraormelezoficial</span>
         </a>
-        <a class="contact-item" href="https://www.google.com/maps?q=Rua+Javacaizinho+Bateias+Campo+Largo+PR" target="_blank" rel="noopener">
+        <button class="contact-item" id="abrir-endereco" style="width:100%; text-align:left; cursor:pointer;">
           <span class="ico">📍</span>
-          <span><small>Endereço</small>Rua Javacaizinho, s/n — Bateias, Campo Largo/PR</span>
-        </a>
+          <span><small>Endereço · toque para abrir no mapa</small>Rua Javacaizinho, s/n — Bateias, Campo Largo/PR</span>
+        </button>
+      </div>
+
+      <div class="avaliacoes reveal">
+        <div class="avaliacoes-estrelas">★★★★★</div>
+        <div class="avaliacoes-texto"><strong>4,9</strong> de 5 · 97 avaliações no Google</div>
+        <div class="avaliacoes-ctas">
+          <a class="btn btn-sm btn-outline-dark" href="https://search.google.com/local/reviews?placeid=ChIJvZ0UCRoj3ZQR-NEiVcb84Mk" target="_blank" rel="noopener">Ver avaliações</a>
+          <a class="btn btn-sm btn-ambar" href="https://search.google.com/local/writereview?placeid=ChIJvZ0UCRoj3ZQR-NEiVcb84Mk" target="_blank" rel="noopener">Deixar avaliação</a>
+        </div>
       </div>
     </div>
     <div class="map-frame reveal">
@@ -242,10 +253,10 @@
 
 <!-- barra fixa no celular -->
 <div class="mobile-bar">
-  <a class="btn btn-whats" data-whats-generico href="#" target="_blank" rel="noopener">💬 Reservar pelo WhatsApp</a>
+  <a class="btn btn-whats" data-whats-generico data-abrir-wa href="#" target="_blank" rel="noopener">💬 Reservar pelo WhatsApp</a>
 </div>
 
-<!-- widget flutuante (desktop) -->
+<!-- widget flutuante: mini-chat de WhatsApp (aberto pelo botão do topo / barra do celular) -->
 <div class="wa-widget">
   <div class="wa-card" id="wa-card">
     <div class="wa-card-head">
@@ -253,17 +264,24 @@
       <img src="img/logo.png" alt="">
       <div><strong>Chácara Ormelez</strong><p>Olá! Estamos por aqui para ajudar 👋</p></div>
     </div>
-    <div class="wa-card-body">
-      <div class="wa-msg">Como podemos te ajudar hoje?</div>
-      <button class="wa-quick" data-msg="Olá! 🐴 Gostaria de saber se uma data está disponível para o retiro da minha igreja.">📅 Consultar uma data</button>
-      <button class="wa-quick" data-msg="Olá! 🐴 Gostaria de saber mais sobre valores e o que está incluso.">💰 Valores e o que está incluso</button>
-      <button class="wa-quick" data-msg="Olá! 🐴 Vim pelo site e queria tirar algumas dúvidas sobre a Chácara Ormelez.">💬 Outra dúvida</button>
+    <div class="wa-card-body" id="wa-card-body">
+      <!-- preenchido dinamicamente pelo home.js (passo 1: assuntos / passo 2: detalhe) -->
     </div>
   </div>
-  <button class="wa-bolha" id="wa-bolha" aria-label="Abrir WhatsApp">
-    <svg viewBox="0 0 32 32" width="34" height="34" fill="#fff"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.36.66 4.56 1.8 6.44L4 29l7.7-1.76a11.98 11.98 0 0 0 4.32.8c6.62 0 12.02-5.4 12.02-12.02C28.04 8.4 22.64 3 16.02 3zm0 21.86c-1.63 0-3.2-.44-4.58-1.27l-.33-.2-4.57 1.04 1.06-4.46-.22-.34a9.83 9.83 0 0 1-1.5-5.21c0-5.45 4.44-9.89 9.9-9.89 5.45 0 9.89 4.44 9.89 9.9 0 5.45-4.44 9.89-9.9 9.89zm5.44-7.4c-.3-.15-1.76-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.24-.46-2.37-1.47-.87-.78-1.47-1.74-1.64-2.04-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z"/></svg>
-    <span class="wa-badge">1</span>
-  </button>
+</div>
+
+<!-- escolha de mapa: Google Maps ou Waze -->
+<div class="modal-overlay" id="modal-endereco">
+  <div class="modal-card">
+    <div class="ico-ferradura">📍</div>
+    <h3>Como você quer chegar?</h3>
+    <p>Rua Javacaizinho, s/n — Bateias, Campo Largo/PR</p>
+    <div class="modal-actions">
+      <a class="btn btn-ambar" href="https://www.google.com/maps/search/?api=1&query=-25.3589025,-49.4972877" target="_blank" rel="noopener">🗺️ Abrir no Google Maps</a>
+      <a class="btn btn-outline-dark" style="background:#33ccff22; border-color:#33ccff88;" href="https://waze.com/ul?ll=-25.3589025,-49.4972877&navigate=yes" target="_blank" rel="noopener">🚗 Abrir no Waze</a>
+      <button class="btn btn-outline-dark" id="modal-endereco-fechar">Cancelar</button>
+    </div>
+  </div>
 </div>
 
 <!-- lightbox -->
