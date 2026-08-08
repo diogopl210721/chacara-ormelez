@@ -566,6 +566,19 @@ footer strong{ color:#fff; }
 .ano-nav strong{ font-family:var(--serif); font-size:1.15rem; font-weight:500; color:var(--ambar); text-align:center; text-transform:capitalize; }
 @media (max-width:640px){ .ano-nav strong{ font-size:.95rem; } }
 
+.ano-nav-central{
+  justify-content:center; gap:28px; margin:0 0 34px;
+}
+.ano-nav-central button{
+  width:46px; height:46px; border:1px solid rgba(32,21,9,.18); color:var(--pinheiral); font-size:1.3rem;
+}
+.ano-nav-central button:hover{ background:rgba(31,51,36,.08); }
+.ano-nav-central strong{ color:var(--terracota); font-size:1.3rem; }
+@media (max-width:640px){
+  .ano-nav-central{ gap:14px; }
+  .ano-nav-central strong{ font-size:1rem; }
+}
+
 .meses-grid{ background:var(--pergaminho); padding:56px 0 100px; }
 .meses-container{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
 @media (max-width:980px){ .meses-container{ grid-template-columns:repeat(2,1fr); } }
