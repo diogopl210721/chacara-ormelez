@@ -558,10 +558,13 @@ footer strong{ color:#fff; }
 .ano-nav{ display:flex; align-items:center; gap:16px; margin:8px 0 4px; }
 .ano-nav button{
   width:40px; height:40px; border-radius:50%; border:1px solid rgba(247,241,227,.3); background:transparent;
-  color:#fff; font-size:1.1rem; cursor:pointer; transition:background .2s;
+  color:#fff; font-size:1.1rem; cursor:pointer; transition:background .2s, opacity .2s; flex-shrink:0;
 }
 .ano-nav button:hover{ background:rgba(247,241,227,.1); }
-.ano-nav strong{ font-family:var(--serif); font-size:1.6rem; color:var(--ambar); min-width:5ch; text-align:center; }
+.ano-nav button:disabled{ opacity:.3; cursor:not-allowed; }
+.ano-nav button:disabled:hover{ background:transparent; }
+.ano-nav strong{ font-family:var(--serif); font-size:1.15rem; font-weight:500; color:var(--ambar); text-align:center; text-transform:capitalize; }
+@media (max-width:640px){ .ano-nav strong{ font-size:.95rem; } }
 
 .meses-grid{ background:var(--pergaminho); padding:56px 0 100px; }
 .meses-container{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
