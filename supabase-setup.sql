@@ -22,11 +22,12 @@ create table if not exists galeria (
   id uuid primary key default gen_random_uuid(),
   url text not null,
   titulo text,
+  categoria text, -- opcional: piscina, capela, refeitorio, tirolesa, skibunda, lual, dormitorios
   ordem int not null default 0,
   created_at timestamptz not null default now()
 );
 
-comment on table galeria is 'Fotos extras exibidas na galeria do site, além das fotos padrão que já vêm no código.';
+comment on table galeria is 'Fotos extras exibidas na galeria do site, além das fotos padrão que já vêm no código. Se "categoria" for preenchida com um destes valores (piscina, capela, refeitorio, tirolesa, skibunda, lual, dormitorios), a foto também aparece quando o visitante filtra a galeria ou clica num item da seção Estrutura.';
 
 -- 3) Segurança (RLS)
 alter table reservas enable row level security;
@@ -82,5 +83,8 @@ alter publication supabase_realtime add table reservas;
 --   alguém abrir o calendário.
 --
 -- • Para adicionar uma foto na galeria: Table Editor → galeria →
---   Insert row → cole o link da imagem em "url".
+--   Insert row → cole o link da imagem em "url". Se quiser que ela
+--   apareça ao clicar num item da seção Estrutura (ex: Piscina),
+--   preencha "categoria" com: piscina, capela, refeitorio, tirolesa,
+--   skibunda, lual ou dormitorios.
 -- ============================================================
