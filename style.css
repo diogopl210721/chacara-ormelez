@@ -468,39 +468,25 @@ footer strong{ color:#fff; }
 @media (min-width:920px){ footer{ padding-bottom:44px; } }
 
 /* ---------------------------------------------------------------
-   WIDGET FLUTUANTE DE WHATSAPP
+   WIDGET ÚNICO DE WHATSAPP (mini-chat) — sem bolha flutuante extra;
+   aberto pelo botão do topo (desktop) ou da barra fixa (celular).
 --------------------------------------------------------------- */
-.wa-widget{ position:fixed; right:20px; bottom:20px; z-index:200; display:flex; flex-direction:column; align-items:flex-end; gap:12px; }
-.wa-bolha{
-  width:64px; height:64px; border-radius:50%; background:#25D366; border:none; cursor:pointer;
-  display:flex; align-items:center; justify-content:center; position:relative;
-  box-shadow:0 12px 28px rgba(0,0,0,.28);
-}
-.wa-bolha::before{
-  content:""; position:absolute; inset:-8px; border-radius:50%; border:2px solid rgba(37,211,102,.55);
-  animation:onda 2.2s ease-out infinite;
-}
-@keyframes onda{ 0%{ transform:scale(.8); opacity:1; } 100%{ transform:scale(1.5); opacity:0; } }
-.wa-bolha img{ width:34px; height:34px; filter:brightness(0) invert(1); }
-.wa-badge{
-  position:absolute; top:-2px; right:-2px; width:18px; height:18px; background:var(--terracota); color:#fff;
-  border-radius:50%; font-size:.65rem; font-weight:800; display:flex; align-items:center; justify-content:center;
-  border:2px solid var(--pergaminho);
-}
+.wa-widget{ position:fixed; right:20px; bottom:20px; z-index:200; }
+@media (max-width:919px){ .wa-widget{ right:12px; bottom:calc(76px + var(--safe-bottom)); left:12px; } }
 
 .wa-card{
-  width:min(320px,86vw); background:#fff; border-radius:18px; overflow:hidden;
-  box-shadow:0 24px 60px rgba(0,0,0,.3);
+  width:min(340px,100%); margin-left:auto; background:#fff; border-radius:18px; overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.32);
   transform:translateY(16px) scale(.96); opacity:0; pointer-events:none;
-  transition:all .3s var(--ease);
+  transition:all .3s var(--ease); max-height:min(72vh,560px); display:flex; flex-direction:column;
 }
 .wa-card.open{ transform:translateY(0) scale(1); opacity:1; pointer-events:auto; }
-.wa-card-head{ background:var(--pinheiral); color:#fff; padding:18px 18px 22px; display:flex; gap:12px; align-items:flex-start; position:relative; }
+.wa-card-head{ background:var(--pinheiral); color:#fff; padding:18px 18px 22px; display:flex; gap:12px; align-items:flex-start; position:relative; flex-shrink:0; }
 .wa-card-head img{ width:42px; height:42px; border-radius:50%; background:var(--ambar); padding:8px; flex-shrink:0; }
 .wa-card-head strong{ display:block; font-family:var(--serif); font-size:1rem; }
 .wa-card-head p{ font-size:.82rem; color:var(--luz); margin-top:2px; }
 .wa-card-close{ position:absolute; top:10px; right:10px; background:none; border:none; color:var(--luz); font-size:1.1rem; cursor:pointer; }
-.wa-card-body{ padding:16px; background:#F0F2F0; display:flex; flex-direction:column; gap:8px; }
+.wa-card-body{ padding:16px; background:#F0F2F0; display:flex; flex-direction:column; gap:8px; overflow-y:auto; }
 .wa-msg{
   background:#fff; padding:10px 13px; border-radius:12px 12px 12px 3px; font-size:.85rem; color:var(--tinta);
   box-shadow:0 1px 3px rgba(0,0,0,.06);
@@ -510,6 +496,41 @@ footer strong{ color:#fff; }
   padding:10px 16px; font-size:.82rem; font-weight:700; cursor:pointer; transition:background .2s;
 }
 .wa-quick:hover{ background:#e9fbf0; border-color:#25D366; }
+.wa-quick-primaria{ background:#25D366; border-color:#25D366; color:#062b12; text-align:center; }
+.wa-quick-primaria:hover{ background:#1fb955; }
+.wa-voltar{
+  align-self:flex-start; background:none; border:none; color:var(--tinta-suave); font-size:.78rem;
+  font-weight:700; cursor:pointer; padding:4px 2px;
+}
+.wa-input{
+  width:100%; border:1px solid rgba(32,21,9,.15); border-radius:10px; padding:10px 12px;
+  font-family:var(--sans); font-size:.85rem; resize:vertical; background:#fff;
+}
+
+/* ---------------------------------------------------------------
+   CHIPS DE FILTRO DA GALERIA
+--------------------------------------------------------------- */
+.filtro-chips{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:22px; }
+.filtro-chip{
+  background:#fff; border:1px solid rgba(32,21,9,.15); border-radius:100px; padding:9px 18px;
+  font-weight:700; font-size:.82rem; cursor:pointer; transition:all .2s var(--ease); color:var(--tinta-suave);
+}
+.filtro-chip:hover{ border-color:var(--terracota); color:var(--tinta); }
+.filtro-chip.ativo{ background:var(--pinheiral); border-color:var(--pinheiral); color:#fff; }
+
+.amenity-hint{ margin-top:18px; font-family:var(--mao); font-size:1.1rem; color:var(--ambar); text-align:center; }
+
+/* ---------------------------------------------------------------
+   AVALIAÇÕES DO GOOGLE
+--------------------------------------------------------------- */
+.avaliacoes{
+  margin-top:18px; background:#fff; border:1px solid rgba(32,21,9,.1); border-radius:var(--radius);
+  padding:20px; text-align:center;
+}
+.avaliacoes-estrelas{ color:var(--ambar-forte); font-size:1.3rem; letter-spacing:2px; }
+.avaliacoes-texto{ font-size:.9rem; color:var(--tinta-suave); margin:6px 0 14px; }
+.avaliacoes-texto strong{ color:var(--tinta); font-family:var(--serif); font-size:1.1rem; }
+.avaliacoes-ctas{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
 
 /* ---------------------------------------------------------------
    UTILITÁRIOS DE PÁGINA (calendário)
@@ -604,4 +625,4 @@ footer strong{ color:#fff; }
 }
 .mobile-bar .btn{ flex:1; justify-content:center; }
 @media (min-width:920px){ .mobile-bar{ display:none; } }
-@media (max-width:919px){ .wa-widget{ display:none; } body{ padding-bottom:calc(64px + var(--safe-bottom)); } }
+@media (max-width:919px){ body{ padding-bottom:calc(64px + var(--safe-bottom)); } }
