@@ -11,14 +11,19 @@
 
 const MESES = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 const DIAS_EXPIRACAO = 2; // horas * 24 = 48h
+const QTD_MESES_VISIVEIS = 3;
 
-let anoAtual = new Date().getFullYear();
+const hojeGlobal = new Date(); hojeGlobal.setHours(0,0,0,0);
+const mesAtualBase = new Date(hojeGlobal.getFullYear(), hojeGlobal.getMonth(), 1);
+let mesBase = new Date(mesAtualBase); // primeiro mês exibido (começa no mês vigente)
 let reservasMap = new Map(); // "YYYY-MM-DD" -> { status, created_at }
 let diaSelecionado = null;   // { iso, el, y, m, d }
 
 const elAno = document.getElementById("ano-titulo");
 const elMeses = document.getElementById("meses-container");
 const elStatus = document.getElementById("cal-status-geral");
+const btnAnoPrev = document.getElementById("ano-prev");
+const btnAnoNext = document.getElementById("ano-next");
 
 function toISO(y,m,d){ return `${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`; }
 
@@ -29,16 +34,18 @@ function estaExpirada(row){
   return horas > DIAS_EXPIRACAO * 24;
 }
 
-/* ---------- Carrega reservas do ano do Supabase ---------- */
+/* ---------- Carrega reservas da janela de meses visível no Supabase ---------- */
 async function carregarReservas(){
+  atualizarBotoesNav();
   if(!supabaseClient){
     elStatus.textContent = "Configure o Supabase em config.js para sincronizar o calendário.";
-    renderAno();
+    renderMeses();
     return;
   }
   try{
-    const inicio = `${anoAtual}-01-01`;
-    const fim = `${anoAtual}-12-31`;
+    const inicio = toISO(mesBase.getFullYear(), mesBase.getMonth(), 1);
+    const fimData = new Date(mesBase.getFullYear(), mesBase.getMonth() + QTD_MESES_VISIVEIS, 0);
+    const fim = toISO(fimData.getFullYear(), fimData.getMonth(), fimData.getDate());
     const { data, error } = await supabaseClient
       .from("ormelez_reservas").select("data,status,created_at")
       .gte("data", inicio).lte("data", fim);
@@ -50,7 +57,7 @@ async function carregarReservas(){
     console.warn("Reservas: não foi possível carregar.", e.message);
     elStatus.textContent = "Não foi possível carregar as reservas agora. Tente atualizar a página.";
   }
-  renderAno();
+  renderMeses();
 }
 
 /* ---------- Tempo real: outros visitantes veem mudanças na hora ---------- */
@@ -61,13 +68,12 @@ if(supabaseClient){
       const row = payload.new && payload.new.data ? payload.new : payload.old;
       if(!row || !row.data) return;
       const iso = row.data;
-      const ano = parseInt(iso.slice(0,4), 10);
       if(payload.eventType === "DELETE"){
         reservasMap.delete(iso);
       } else {
         reservasMap.set(iso, { status: payload.new.status, created_at: payload.new.created_at });
       }
-      if(ano === anoAtual) atualizarCelula(iso);
+      atualizarCelula(iso);
     })
     .subscribe();
 }
@@ -82,18 +88,25 @@ function statusVisual(iso){
   return "livre"; // cancelado ou outro
 }
 
-function renderAno(){
-  elAno.textContent = anoAtual;
+function renderMeses(){
+  const nomesVisiveis = [];
+  for(let i=0;i<QTD_MESES_VISIVEIS;i++){
+    const d = new Date(mesBase.getFullYear(), mesBase.getMonth()+i, 1);
+    nomesVisiveis.push(`${MESES[d.getMonth()]} de ${d.getFullYear()}`);
+  }
+  elAno.textContent = nomesVisiveis.join(" · ");
   elMeses.innerHTML = "";
-  const hoje = new Date(); hoje.setHours(0,0,0,0);
 
-  for(let m=0; m<12; m++){
+  for(let i=0;i<QTD_MESES_VISIVEIS;i++){
+    const dataMes = new Date(mesBase.getFullYear(), mesBase.getMonth()+i, 1);
+    const ano = dataMes.getFullYear(), m = dataMes.getMonth();
+
     const card = document.createElement("div");
     card.className = "mes-card reveal";
 
     const titulo = document.createElement("div");
     titulo.className = "mes-titulo";
-    titulo.textContent = `${MESES[m]} de ${anoAtual}`;
+    titulo.textContent = `${MESES[m]} de ${ano}`;
     card.appendChild(titulo);
 
     const weekdays = document.createElement("div");
@@ -106,21 +119,21 @@ function renderAno(){
     const grid = document.createElement("div");
     grid.className = "mes-dias";
 
-    const firstDow = new Date(anoAtual,m,1).getDay();
-    const daysInMonth = new Date(anoAtual,m+1,0).getDate();
+    const firstDow = new Date(ano,m,1).getDay();
+    const daysInMonth = new Date(ano,m+1,0).getDate();
 
-    for(let i=0;i<firstDow;i++){
+    for(let i2=0;i2<firstDow;i2++){
       const off = document.createElement("div"); off.className = "dia off"; grid.appendChild(off);
     }
 
     for(let d=1; d<=daysInMonth; d++){
-      const iso = toISO(anoAtual,m,d);
+      const iso = toISO(ano,m,d);
       const btn = document.createElement("button");
       btn.className = "dia";
       btn.textContent = d;
       btn.dataset.iso = iso;
       grid.appendChild(btn);
-      atualizarCelula(iso, btn, new Date(anoAtual,m,d), hoje);
+      atualizarCelula(iso, btn, new Date(ano,m,d), hojeGlobal);
     }
 
     card.appendChild(grid);
@@ -130,11 +143,15 @@ function renderAno(){
   document.querySelectorAll(".reveal").forEach(el=> el.classList.add("on"));
 }
 
+function atualizarBotoesNav(){
+  if(btnAnoPrev) btnAnoPrev.disabled = mesBase.getTime() <= mesAtualBase.getTime();
+}
+
 function atualizarCelula(iso, btnDireto, dataCel, hojeCel){
   const btn = btnDireto || document.querySelector(`.dia[data-iso="${iso}"]`);
   if(!btn) return;
   const cellDate = dataCel || (()=>{ const [y,m,d]=iso.split("-").map(Number); return new Date(y,m-1,d); })();
-  const hoje = hojeCel || (()=>{ const h=new Date(); h.setHours(0,0,0,0); return h; })();
+  const hoje = hojeCel || hojeGlobal;
 
   btn.classList.remove("past","reservado","pre-reservado","bloqueado","hoje");
   btn.disabled = false;
@@ -164,9 +181,16 @@ function atualizarCelula(iso, btnDireto, dataCel, hojeCel){
   }
 }
 
-/* ---------- Navegação de ano ---------- */
-document.getElementById("ano-prev")?.addEventListener("click", ()=>{ anoAtual--; carregarReservas(); });
-document.getElementById("ano-next")?.addEventListener("click", ()=>{ anoAtual++; carregarReservas(); });
+/* ---------- Navegação: avança/volta de 3 em 3 meses (não deixa voltar antes do mês vigente) ---------- */
+btnAnoPrev?.addEventListener("click", ()=>{
+  const anterior = new Date(mesBase.getFullYear(), mesBase.getMonth()-QTD_MESES_VISIVEIS, 1);
+  mesBase = anterior.getTime() < mesAtualBase.getTime() ? new Date(mesAtualBase) : anterior;
+  carregarReservas();
+});
+btnAnoNext?.addEventListener("click", ()=>{
+  mesBase = new Date(mesBase.getFullYear(), mesBase.getMonth()+QTD_MESES_VISIVEIS, 1);
+  carregarReservas();
+});
 
 /* ---------- Modal de confirmação ---------- */
 const modal = document.getElementById("modal-reserva");
