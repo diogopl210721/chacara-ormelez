@@ -64,28 +64,48 @@ document.querySelectorAll("[data-magnetico]").forEach(btn=>{
   btn.addEventListener("mouseleave", ()=>{ btn.style.transform = "translate(0,0)"; });
 });
 
-/* ---------- Links de WhatsApp (mensagem padrão) ---------- */
+/* ---------- Links de WhatsApp (mensagem padrão / fallback sem JS) ---------- */
 const genericMsg = `Olá! 🐴 Vim pelo site e queria saber mais sobre a Chácara Ormelez para o retiro da minha igreja.`;
 document.querySelectorAll("[data-whats-generico]").forEach(el=>{
   el.href = whatsLink(genericMsg);
 });
 
-/* ---------- Widget flutuante de WhatsApp ---------- */
-const waBolha = document.getElementById("wa-bolha");
+/* ---------- Widget único de WhatsApp (mini-chat) ----------
+   Só existe um ponto de entrada visível (o botão "WhatsApp" do topo /
+   da barra do celular). Ele abre este mesmo cartão em todo lugar. */
 const waCard = document.getElementById("wa-card");
 const waClose = document.getElementById("wa-card-close");
-if(waBolha && waCard){
-  const abrir = ()=> waCard.classList.add("open");
-  const fechar = ()=> waCard.classList.remove("open");
-  waBolha.addEventListener("click", ()=> waCard.classList.toggle("open"));
-  if(waClose) waClose.addEventListener("click", fechar);
-  // abre sozinho uma vez, depois de um tempinho, se ainda não foi visto
-  if(!sessionStorage.getItem("wa-visto")){
-    setTimeout(()=>{ abrir(); sessionStorage.setItem("wa-visto","1"); }, 4200);
-  }
-  document.querySelectorAll(".wa-quick").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      window.open(whatsLink(btn.dataset.msg), "_blank", "noopener");
+
+window.abrirWaCard = function(){
+  if(!waCard) return;
+  waCard.classList.add("open");
+  if(window.mostrarPassoWa) window.mostrarPassoWa("inicio");
+};
+window.fecharWaCard = function(){
+  if(waCard) waCard.classList.remove("open");
+};
+
+if(waCard){
+  if(waClose) waClose.addEventListener("click", window.fecharWaCard);
+  document.querySelectorAll("[data-abrir-wa]").forEach(el=>{
+    el.addEventListener("click", (e)=>{
+      e.preventDefault();
+      waCard.classList.toggle("open");
+      if(waCard.classList.contains("open") && window.mostrarPassoWa) window.mostrarPassoWa("inicio");
     });
   });
+  // abre sozinho uma vez, depois de um tempinho, se ainda não foi visto
+  if(!sessionStorage.getItem("wa-visto")){
+    setTimeout(()=>{ window.abrirWaCard(); sessionStorage.setItem("wa-visto","1"); }, 5200);
+  }
+}
+
+/* ---------- Modal de escolha de mapa (Google Maps / Waze) ---------- */
+const modalEndereco = document.getElementById("modal-endereco");
+const abrirEnderecoBtn = document.getElementById("abrir-endereco");
+const fecharEnderecoBtn = document.getElementById("modal-endereco-fechar");
+if(modalEndereco && abrirEnderecoBtn){
+  abrirEnderecoBtn.addEventListener("click", ()=> modalEndereco.classList.add("open"));
+  fecharEnderecoBtn?.addEventListener("click", ()=> modalEndereco.classList.remove("open"));
+  modalEndereco.addEventListener("click", (e)=>{ if(e.target === modalEndereco) modalEndereco.classList.remove("open"); });
 }
