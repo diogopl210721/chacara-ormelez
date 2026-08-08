@@ -123,7 +123,7 @@ async function carregarGaleria(){
   renderGaleria(galeriaCompleta);
   if(!supabaseClient) return;
   try{
-    const { data, error } = await supabaseClient.from("galeria").select("*").order("ordem", { ascending:true });
+    const { data, error } = await supabaseClient.from("ormelez_galeria").select("*").order("ordem", { ascending:true });
     if(error) throw error;
     if(data && data.length){
       const extras = data.map((d)=>({ url:d.url, titulo:d.titulo, categoria:d.categoria || null }));
@@ -256,7 +256,7 @@ async function carregarEstatisticaDatas(){
     const inicio = `${ano}-01-01`;
     const fim = `${ano}-12-31`;
     const { data, error } = await supabaseClient
-      .from("reservas").select("data").gte("data", inicio).lte("data", fim);
+      .from("ormelez_reservas").select("data").gte("data", inicio).lte("data", fim);
     if(error) throw error;
     const totalDiasAno = ((new Date(ano,11,31) - new Date(ano,0,1)) / 86400000) + 1;
     const diasRestantesAno = Math.round((new Date(ano,11,31) - hoje) / 86400000);
