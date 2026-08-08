@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Disponibilidade — Chácara Ormelez</title>
+<meta name="description" content="Veja o calendário completo do ano da Chácara Ormelez e escolha a data do seu retiro. Reserve com um clique direto pelo WhatsApp.">
+<meta name="theme-color" content="#0B1B12">
+<link rel="icon" href="img/logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<div id="preloader">
+  <img class="ferradura" src="img/logo.png" alt="">
+  <span>abrindo o calendário…</span>
+</div>
+
+<div id="progresso-estrada"></div>
+
+<header class="topbar" id="topbar">
+  <a href="index.html" class="brand">
+    <img src="img/logo.png" alt="Chácara Ormelez">
+    <span class="brand-txt">Chácara Ormelez<small>Bateias · Paraná</small></span>
+  </a>
+  <nav class="nav-links">
+    <a class="estrada-underline" href="index.html#estrutura">Estrutura</a>
+    <a class="estrada-underline" href="index.html#galeria">Galeria</a>
+    <a class="estrada-underline" href="index.html#contato">Contato</a>
+  </nav>
+  <a class="btn btn-whats" data-magnetico data-whats-generico href="#" target="_blank" rel="noopener">💬 WhatsApp</a>
+</header>
+
+<section class="pagina-topo">
+  <div class="wrap">
+    <a href="index.html" class="voltar-link estrada-underline">← Voltar para o início</a>
+    <div class="eyebrow">Disponibilidade</div>
+    <h1>Escolha a data do seu retiro</h1>
+    <p>Clique num dia livre para pré-reservar — a data fica garantida por até 48 horas enquanto confirmamos tudo com você pelo WhatsApp. Se ninguém confirmar nesse prazo, ela libera automaticamente.</p>
+
+    <div class="ano-nav">
+      <button id="ano-prev" aria-label="Ano anterior">‹</button>
+      <strong id="ano-titulo">—</strong>
+      <button id="ano-next" aria-label="Próximo ano">›</button>
+    </div>
+
+    <div class="legenda">
+      <span><i class="dot livre"></i> Disponível</span>
+      <span><i class="dot pre"></i> Pré-reservado (até 48h)</span>
+      <span><i class="dot reservado"></i> Reservado e confirmado</span>
+      <span><i class="dot bloqueado"></i> Indisponível</span>
+      <span><i class="dot hoje"></i> Hoje</span>
+    </div>
+    <p id="cal-status-geral" style="margin-top:14px; color:var(--luz); font-size:.85rem;"></p>
+  </div>
+</section>
+
+<section class="meses-grid">
+  <div class="wrap">
+    <div class="meses-container" id="meses-container"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand" style="justify-content:center; margin-bottom:14px;">
+      <img src="img/logo.png" alt="" style="height:30px; filter:brightness(0) invert(1);">
+    </div>
+    <strong>Chácara Ormelez</strong> · Retiros para igrejas, seminários e congressos<br>
+    Bateias, Campo Largo — Paraná · (41) 99924-9827
+  </div>
+</footer>
+
+<div class="mobile-bar">
+  <a class="btn btn-whats" data-whats-generico href="#" target="_blank" rel="noopener">💬 Falar no WhatsApp</a>
+</div>
+
+<!-- modal de confirmação de pré-reserva -->
+<div class="modal-overlay" id="modal-reserva">
+  <div class="modal-card">
+    <div class="ico-ferradura">🐴</div>
+    <h3>Pré-reservar esta data?</h3>
+    <p>
+      Você está pré-reservando o dia <span class="data-alvo" id="modal-data">—</span>.
+      Ela fica garantida por até <strong>48 horas</strong> enquanto confirmamos tudo com você pelo WhatsApp.
+    </p>
+    <div class="modal-actions">
+      <button class="btn btn-whats" id="modal-confirmar">💬 Pré-reservar e chamar no WhatsApp</button>
+      <button class="btn btn-outline-dark" id="modal-cancelar">Cancelar</button>
+    </div>
+    <p class="modal-erro" id="modal-erro"></p>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script src="calendar.js"></script>
+</body>
+</html>
