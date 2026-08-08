@@ -40,7 +40,7 @@ async function carregarReservas(){
     const inicio = `${anoAtual}-01-01`;
     const fim = `${anoAtual}-12-31`;
     const { data, error } = await supabaseClient
-      .from("reservas").select("data,status,created_at")
+      .from("ormelez_reservas").select("data,status,created_at")
       .gte("data", inicio).lte("data", fim);
     if(error) throw error;
     reservasMap.clear();
@@ -57,7 +57,7 @@ async function carregarReservas(){
 if(supabaseClient){
   supabaseClient
     .channel("reservas-ao-vivo")
-    .on("postgres_changes", { event:"*", schema:"public", table:"reservas" }, (payload)=>{
+    .on("postgres_changes", { event:"*", schema:"public", table:"ormelez_reservas" }, (payload)=>{
       const row = payload.new && payload.new.data ? payload.new : payload.old;
       if(!row || !row.data) return;
       const iso = row.data;
@@ -207,11 +207,11 @@ modalConfirmar?.addEventListener("click", async ()=>{
 
   try{
     // limpa uma pré-reserva vencida da mesma data, se existir (auto-liberação após 48h)
-    await supabaseClient.from("reservas").delete()
+    await supabaseClient.from("ormelez_reservas").delete()
       .eq("data", iso).eq("status", "pre-reservado")
       .lt("created_at", new Date(Date.now() - DIAS_EXPIRACAO*24*36e5).toISOString());
 
-    const { error } = await supabaseClient.from("reservas")
+    const { error } = await supabaseClient.from("ormelez_reservas")
       .insert({ data: iso, status: "pre-reservado" });
 
     if(error){
